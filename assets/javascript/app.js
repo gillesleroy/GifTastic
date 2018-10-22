@@ -74,8 +74,7 @@ function displayTopicInfo() {
             // var imageUrl = results[i].images.original.url;
             var imageUrl = results[i].images.fixed_height_still.url;
             var imageUrlAnim = imageUrl.replace("_s.",".");
-            var imageRating = results[i].rating;
-            
+            var imageRating = results[i].rating;      
             var imageAttr = [
                 { a: "src", v: imageUrl},
                 { a: "alt", v: topics[i]},
@@ -83,10 +82,21 @@ function displayTopicInfo() {
                 { a: "image-anim", v: imageUrlAnim},
                 { a: "image-state", v: "still"}
                ];
+            var divTopic = $("<div>");
+            var p = $("<p>");
+            p.text(imageRating);
+            divTopic.append(p);
+            divTopic.append(
+                            addImage("imgClass"
+                            ,imageAttr)      
+                        );  
             $("#imgReturned").prepend(
-                             addImage("imgClass"
-                                     ,imageAttr)
-                );
+                divTopic
+               );                        
+            // $("#imgReturned").prepend(
+            //                  addImage("imgClass"
+            //                          ,imageAttr)
+            //     );
             }
       // ========================
 
