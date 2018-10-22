@@ -75,22 +75,52 @@ function displayTopicInfo() {
             var imageUrl = results[i].images.fixed_height_still.url;
             var imageUrlAnim = imageUrl.replace("_s.",".");
             var imageRating = results[i].rating;      
-            var imageAttr = [
-                { a: "src", v: imageUrl},
-                { a: "alt", v: topics[i]},
-                { a: "image-still", v: imageUrl},
-                { a: "image-anim", v: imageUrlAnim},
-                { a: "image-state", v: "still"}
-               ];
-            
-            var divTopic = $("<div>");
-            var p = $("<p>");
-            p.text("Rating: "+imageRating);
+            // var imageAttr = [
+            //     { a: "src", v: imageUrl},
+            //     { a: "alt", v: topics[i]},
+            //     { a: "image-still", v: imageUrl},
+            //     { a: "image-anim", v: imageUrlAnim},
+            //     { a: "image-state", v: "still"}
+            //    ];
+            var objImg = {type: "img"
+                         ,class: "imgClass"
+                         ,attr: [
+                            { a: "src", v: imageUrl},
+                            { a: "alt", v: topics[i]},
+                            { a: "image-still", v: imageUrl},
+                            { a: "image-anim", v: imageUrlAnim},
+                            { a: "image-state", v: "still"}
+                            ]
+                         }; 
+            var objTopic = {
+                type: "div"
+               ,class: "divClass"
+               ,attr: [
+                        { a: "id", v: "divTopic"}
+                      ]
+            }   
+            var objP ={
+                type: "p"
+               ,class: "pClass"
+               ,text: "Rating: "+imageRating
+               ,attr: [ 
+                        { a: "id", v: "pTopic"}
+                    //    ,{ a: "text", v: imageRating}
+                      ]
+            }                     
+            var divTopic = addObj(objTopic);
+            var p = addObj(objP);
+            // var divTopic = $("<div>");
+            // var p = $("<p>");
+            // p.text("Rating: "+imageRating);
             divTopic.append(p);
+            // divTopic.append(
+            //                 addImage("imgClass"
+            //                 ,imageAttr)      
+            //             );  
             divTopic.append(
-                            addImage("imgClass"
-                            ,imageAttr)      
-                        );  
+                addObj(objImg)      
+            );            
             $("#imgReturned").prepend(
                 divTopic
                );                        
