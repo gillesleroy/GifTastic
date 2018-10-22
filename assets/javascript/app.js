@@ -82,9 +82,10 @@ function displayTopicInfo() {
                 { a: "image-anim", v: imageUrlAnim},
                 { a: "image-state", v: "still"}
                ];
+            
             var divTopic = $("<div>");
             var p = $("<p>");
-            p.text(imageRating);
+            p.text("Rating: "+imageRating);
             divTopic.append(p);
             divTopic.append(
                             addImage("imgClass"
@@ -93,29 +94,7 @@ function displayTopicInfo() {
             $("#imgReturned").prepend(
                 divTopic
                );                        
-            // $("#imgReturned").prepend(
-            //                  addImage("imgClass"
-            //                          ,imageAttr)
-            //     );
             }
-      // ========================
-
-      // for (var i = 0; i < results.length; i++) {
-
-      // Step 3: uncomment the for loop above and the closing curly bracket below.
-      // Make a div with jQuery and store it in a variable named animalDiv.
-      // Make a paragraph tag with jQuery and store it in a variable named p.
-      // Set the inner text of the paragraph to the rating of the image in results[i].
-      // Make an image tag with jQuery and store it in a variable named animalImage.
-      // Set the image's src to results[i]'s fixed_height.url.
-      // Append the p variable to the animalDiv variable.
-      // Append the animalImage variable to the animalDiv variable.
-      // Prepend the animalDiv variable to the element with an id of gifs-appear-here.
-
-      // ============= put step 3 in between these dashes ======================
-
-      // ==================================
-      // }
 
     });
   };
