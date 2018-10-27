@@ -1,29 +1,21 @@
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBKEcxyTWl_UVp1bFdK0Wi49exXF-6nJ9k",
-        authDomain: "testgl3-e8e4f.firebaseapp.com",
-        databaseURL: "https://testgl3-e8e4f.firebaseio.com",
-        projectId: "testgl3-e8e4f",
-        storageBucket: "testgl3-e8e4f.appspot.com",
-        messagingSenderId: "661554547530"
-      };
-    
-       firebase.initializeApp(config);
-    
-       var database = firebase.database();
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyBKEcxyTWl_UVp1bFdK0Wi49exXF-6nJ9k",
+    authDomain: "testgl3-e8e4f.firebaseapp.com",
+    databaseURL: "https://testgl3-e8e4f.firebaseio.com",
+    projectId: "testgl3-e8e4f",
+    storageBucket: "testgl3-e8e4f.appspot.com",
+    messagingSenderId: "661554547530"
+    };
 
+    firebase.initializeApp(config);
+
+    var database = firebase.database();
 
 // Initial list of topic buttons
 var topics = [
-    // "Beatles", 
-    // "Rolling+Stones", 
-    // "Deep+Purple"
 ];
-
-// database.ref().set({
-//     names: topics
-//     });   
 
 //Refresh the list of buttons from the array
 function renderButtons(savedButtons) {
@@ -43,17 +35,6 @@ function renderButtons(savedButtons) {
                                 )
 
         )}
-
-    // $("#buttons-view").append(addObj({
-    //                     type:  "button"
-    //                     ,class: "topic"
-    //                     ,text: savedButton
-    //                     ,attr: [
-    //                             { 
-    //                                 a: "topic-name", v: savedButton}
-    //                             ]
-    //                     }
-    //                 ));   
   }
 
 // Call the API and return responses in html elements
@@ -179,11 +160,12 @@ $("#add-button").on("click", function(event) {
           }
       }
       if (isGood){
+        topics.push(topicName); 
         database.ref().set({
         names: topics
-        });      
-        topics.push(topicName);      
+        });           
         renderButtons(topics);
+        $("#topic-input").val("");
       }
     }
 });
@@ -195,6 +177,7 @@ $("#clear-button").on("click", function(event) {
         database.ref().set({
         names: topics
         });      
+        $("#imgReturned").empty();
         renderButtons(topics);
 });
 
@@ -204,40 +187,17 @@ $("#clear-button").on("click", function(event) {
  database.ref().on("value", 
  function(snapshot) {
  // console.log(snapshot.val());
- // console.log(name);
-
  topics = snapshot.val().names;
- renderButtons(snapshot.val().names);
-
-//  $("#buttons-view").append(addObj({
-//     type:  "button"
-//     ,class: "topic"
-//     ,text: snapshot.val().name
-//     ,attr: [
-//             { 
-//                 a: "topic-name", v: snapshot.val().name}
-//             ]
-//     }
-//     ));   
-
-//  $("#name-display").text(snapshot.val().name);
-//  $("#email-display").text(snapshot.val().email);
-//  $("#age-display").text(snapshot.val().age);
-//  $("#comment-display").text(snapshot.val().comment);
+ renderButtons(topics);
+//  renderButtons(snapshot.val().names);
  },
-//   $("#click-value").text(snapshot.val().clickCount);
-//   clickCounter = snapshot.val().clickCount;
+
 function(errorObject) {
  console.log("The read failed: " + errorObject.code);
- // alert(snapshot.val().name);
 });
 
-
-// $(document).on("click", "button", displayTopicInfo);
-// This works only first time $("button").on("click", displayTopicInfo);
 $(document).on("click", ".topic", displayTopicInfo);
 
-// $(".imgClass").on("click", function() {
 $(document).on("click", ".imgClass", imgChangeState);
 
 
