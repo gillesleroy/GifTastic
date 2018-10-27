@@ -1,3 +1,4 @@
+
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyBKEcxyTWl_UVp1bFdK0Wi49exXF-6nJ9k",
@@ -21,7 +22,7 @@ var topics = [
 ];
 
 //Refresh the list of buttons from the array
-function renderButtons() {
+function renderButtons(savedButton) {
     $("#buttons-view").empty();
     // Looping through the array of topics
     for (var i = 0; i < topics.length; i++){
@@ -38,6 +39,17 @@ function renderButtons() {
                                 )
 
         )}
+
+    $("#buttons-view").append(addObj({
+                        type:  "button"
+                        ,class: "topic"
+                        ,text: savedButton
+                        ,attr: [
+                                { 
+                                    a: "topic-name", v: savedButton}
+                                ]
+                        }
+                    ));   
   }
 
 // Call the API and return responses in html elements
@@ -151,11 +163,47 @@ function imgChangeState () {
 $("#add-button").on("click", function(event) {
     event.preventDefault();
     var topicName = $("#topic-input").val().trim();
-    topics.push(topicName);
-    renderButtons();
+    // topics.push(topicName);
+    database.ref().set({
+        name: topicName
+      });
+    renderButtons(topicName);
 });
 
-renderButtons();
+//  renderButtons();
+
+ // Firebase watcher + initial loader HINT: .on("value")
+ database.ref().on("value", 
+ function(snapshot) {
+ // console.log(snapshot.val());
+ // console.log(name);
+ renderButtons(snapshot.val().name);
+//  $("#buttons-view").append(addObj({
+//     type:  "button"
+//     ,class: "topic"
+//     ,text: snapshot.val().name
+//     ,attr: [
+//             { 
+//                 a: "topic-name", v: snapshot.val().name}
+//             ]
+//     }
+//     ));   
+
+//  $("#name-display").text(snapshot.val().name);
+//  $("#email-display").text(snapshot.val().email);
+//  $("#age-display").text(snapshot.val().age);
+//  $("#comment-display").text(snapshot.val().comment);
+ },
+//   $("#click-value").text(snapshot.val().clickCount);
+//   clickCounter = snapshot.val().clickCount;
+function(errorObject) {
+ console.log("The read failed: " + errorObject.code);
+ // alert(snapshot.val().name);
+
+
+});
+
+
 
 // $(document).on("click", "button", displayTopicInfo);
 // This works only first time $("button").on("click", displayTopicInfo);
