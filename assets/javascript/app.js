@@ -166,18 +166,36 @@ function imgChangeState () {
 // Click on Submit adds a button
 $("#add-button").on("click", function(event) {
     event.preventDefault();
+    var isGood = true;
     var topicName = $("#topic-input").val().trim();
     if (topicName != "" )
     {
-    topics.push(topicName);
-    // database.ref().set({
-    //     name: topicName
-    //   });
-    database.ref().set({
-    names: topics
-    });      
-    renderButtons(topics);
+      for (var i=0;i<topics.length;i++)
+      {
+          if(topics[i].toLowerCase() === topicName.toLowerCase())
+          {
+            isGood = false;
+            break;
+          }
+      }
+      if (isGood){
+        database.ref().set({
+        names: topics
+        });      
+        topics.push(topicName);      
+        renderButtons(topics);
+      }
     }
+});
+
+// Click on Submit adds a button
+$("#clear-button").on("click", function(event) {
+    event.preventDefault();
+    topics =[];
+        database.ref().set({
+        names: topics
+        });      
+        renderButtons(topics);
 });
 
 //  renderButtons();
@@ -188,7 +206,9 @@ $("#add-button").on("click", function(event) {
  // console.log(snapshot.val());
  // console.log(name);
 
+ topics = snapshot.val().names;
  renderButtons(snapshot.val().names);
+
 //  $("#buttons-view").append(addObj({
 //     type:  "button"
 //     ,class: "topic"
@@ -210,10 +230,7 @@ $("#add-button").on("click", function(event) {
 function(errorObject) {
  console.log("The read failed: " + errorObject.code);
  // alert(snapshot.val().name);
-
-
 });
-
 
 
 // $(document).on("click", "button", displayTopicInfo);
