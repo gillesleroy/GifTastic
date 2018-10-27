@@ -16,40 +16,44 @@
 
 // Initial list of topic buttons
 var topics = [
-    "Beatles", 
-    "Rolling+Stones", 
-    "Deep+Purple"
+    // "Beatles", 
+    // "Rolling+Stones", 
+    // "Deep+Purple"
 ];
 
+// database.ref().set({
+//     names: topics
+//     });   
+
 //Refresh the list of buttons from the array
-function renderButtons(savedButton) {
+function renderButtons(savedButtons) {
     $("#buttons-view").empty();
     // Looping through the array of topics
-    for (var i = 0; i < topics.length; i++){
+    for (var i = 0; i < savedButtons.length; i++){
         $("#buttons-view").append(
                                 addObj({
                                     type:  "button"
                                     ,class: "topic"
-                                    ,text: topics[i]
+                                    ,text: savedButtons[i]
                                     ,attr: [
                                             { 
-                                                a: "topic-name", v: topics[i]}
+                                                a: "topic-name", v: savedButtons[i]}
                                             ]
                                     }
                                 )
 
         )}
 
-    $("#buttons-view").append(addObj({
-                        type:  "button"
-                        ,class: "topic"
-                        ,text: savedButton
-                        ,attr: [
-                                { 
-                                    a: "topic-name", v: savedButton}
-                                ]
-                        }
-                    ));   
+    // $("#buttons-view").append(addObj({
+    //                     type:  "button"
+    //                     ,class: "topic"
+    //                     ,text: savedButton
+    //                     ,attr: [
+    //                             { 
+    //                                 a: "topic-name", v: savedButton}
+    //                             ]
+    //                     }
+    //                 ));   
   }
 
 // Call the API and return responses in html elements
@@ -163,11 +167,17 @@ function imgChangeState () {
 $("#add-button").on("click", function(event) {
     event.preventDefault();
     var topicName = $("#topic-input").val().trim();
-    // topics.push(topicName);
+    if (topicName != "" )
+    {
+    topics.push(topicName);
+    // database.ref().set({
+    //     name: topicName
+    //   });
     database.ref().set({
-        name: topicName
-      });
-    renderButtons(topicName);
+    names: topics
+    });      
+    renderButtons(topics);
+    }
 });
 
 //  renderButtons();
@@ -177,7 +187,8 @@ $("#add-button").on("click", function(event) {
  function(snapshot) {
  // console.log(snapshot.val());
  // console.log(name);
- renderButtons(snapshot.val().name);
+
+ renderButtons(snapshot.val().names);
 //  $("#buttons-view").append(addObj({
 //     type:  "button"
 //     ,class: "topic"
