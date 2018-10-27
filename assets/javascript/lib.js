@@ -4,7 +4,7 @@ function addObj(obj)
     var o = $("<"+obj.type+">");
     // img.attr("src", imgUrl);
     o.addClass(obj.class);
-    if (obj.type === "p")
+    if (obj.type === "p" || obj.type === "button")
        {
         o.text(obj.text);
        }

@@ -1,18 +1,3 @@
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyBKEcxyTWl_UVp1bFdK0Wi49exXF-6nJ9k",
-        authDomain: "testgl3-e8e4f.firebaseapp.com",
-        databaseURL: "https://testgl3-e8e4f.firebaseio.com",
-        projectId: "testgl3-e8e4f",
-        storageBucket: "testgl3-e8e4f.appspot.com",
-        messagingSenderId: "661554547530"
-      };
-    
-       firebase.initializeApp(config);
-    
-       var database = firebase.database();
-
-
 // Initial list of topic buttons
 var topics = [
     "Beatles", 
@@ -20,12 +5,46 @@ var topics = [
     "Deep+Purple"
 ];
 
+// Adds a new button element with its attributes
+// function addButton(buttonText
+//                     ,buttonClass
+//                     ,buttonAttrName
+//                     ,buttonAttrVal) 
+//     {
+//         var b = $("<button>");
+//         b.text(buttonText);
+//         b.addClass(buttonClass);
+//         b.attr(buttonAttrName, buttonAttrVal);
+//         return(b);  
+//     }
+
+// Adds a new image element with its attributes
+// function addImage(imgClass
+//                  ,imgAttr
+//                 ) 
+//     {
+//     var img = $("<img>");
+//     // img.attr("src", imgUrl);
+//     img.addClass(imgClass);
+//     for (var j = 0;j<imgAttr.length;j++)
+//      {
+//         img.attr(imgAttr[j].a, imgAttr[j].v);
+//      }
+
+//     return(img);  
+//     }
+
 //Refresh the list of buttons from the array
 function renderButtons() {
     $("#buttons-view").empty();
     // Looping through the array of topics
     for (var i = 0; i < topics.length; i++){
         $("#buttons-view").append(
+                                // addButton(topics[i]
+                                //            ,"topic"
+                                //            ,"topic-name"
+                                //            ,topics[i])
+                                // );
                                 addObj({
                                     type:  "button"
                                     ,class: "topic"
@@ -42,7 +61,6 @@ function renderButtons() {
 
 // Call the API and return responses in html elements
 function displayTopicInfo() {
-    var numCols = 0;
     var limit = 10;
     var topic = $(this).attr("topic-name");
     var apiKey = "CQBA758YfOGNEtIK6IKjzXVOwjToS6uN";
@@ -65,27 +83,65 @@ function displayTopicInfo() {
 
       for (var i=0;i<results.length;i++)
             {
+            // var imageUrl = results[i].images.original.url;
             var imageUrl = results[i].images.fixed_height_still.url;
             var imageUrlAnim = imageUrl.replace("_s.",".");
             var imageRating = results[i].rating;      
-   
-            if (numCols ===0)
-               {
-                var divRow = addObj({
-                    type:  "div"
-                    ,class: "row"
-                    ,attr: [
-                            { a: "id", v: "divrow"}
-                            ]
-                    });
-               }
+            // var imageAttr = [
+            //     { a: "src", v: imageUrl},
+            //     { a: "alt", v: topics[i]},
+            //     { a: "image-still", v: imageUrl},
+            //     { a: "image-anim", v: imageUrlAnim},
+            //     { a: "image-state", v: "still"}
+            //    ];
+            // var objImg = {type: "img"
+            //              ,class: "imgClass"
+            //              ,attr: [
+            //                 { a: "src", v: imageUrl},
+            //                 { a: "alt", v: topics[i]},
+            //                 { a: "image-still", v: imageUrl},
+            //                 { a: "image-anim", v: imageUrlAnim},
+            //                 { a: "image-state", v: "still"}
+            //                 ]
+            //              }; 
+            // var objTopic = {
+            //     type:  "div"
+            //    ,class: "divClass"
+            //    ,attr: [
+            //             { a: "id", v: "divTopic"}
+            //           ]
+            // }   
+            // var objP ={
+            //     type: "p"
+            //    ,class: "pClass"
+            //    ,text:  "Rating: "+imageRating
+            //    ,attr: [ 
+            //             { a: "id", v: "pTopic"}
+            //         //    ,{ a: "text", v: imageRating}
+            //           ]
+            // }                     
+            // var divTopic = addObj(objTopic);
             var divTopic = addObj({
                                     type:  "div"
-                                    ,class: "col-lg-4"
+                                    ,class: "divClass"
                                     ,attr: [
                                             { a: "id", v: "divTopic"}
                                             ]
                                     });
+            // var p = addObj(objP);
+            // var p = addObj(
+            // {
+            //     type: "p"
+            //    ,class: "pClass"
+            //    ,text:  "Rating: "+imageRating
+            //    ,attr: [ 
+            //             { a: "id", v: "pTopic"}
+            //         //    ,{ a: "text", v: imageRating}
+            //           ]
+            // });      
+            // var divTopic = $("<div>");
+            // var p = $("<p>");
+            // p.text("Rating: "+imageRating);
             divTopic.append(addObj(
                 {
                     type: "p"
@@ -96,7 +152,10 @@ function displayTopicInfo() {
                         //    ,{ a: "text", v: imageRating}
                           ]
                 }));
-
+            // divTopic.append(
+            //                 addImage("imgClass"
+            //                 ,imageAttr)      
+            //             );  
             divTopic.append(
                 addObj(
                     {type: "img"
@@ -110,21 +169,11 @@ function displayTopicInfo() {
                             ]
                          }
                 )      
-            );   
-            $(divRow).prepend(divTopic);
-
-            if (numCols === 0)    
-            {
-                $("#imgReturned").prepend(
-                    divRow
-                   );                       
-            }     
-            numCols++;
-            if (numCols > 3)
-            {
-                numCols = 0;
-            }         
-        }
+            );            
+            $("#imgReturned").prepend(
+                divTopic
+               );                        
+            }
 
     });
   };
